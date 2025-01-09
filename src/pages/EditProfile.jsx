@@ -48,7 +48,7 @@ export const action =
       store.dispatch(logout());
       return redirect("/login");
     } catch (error) {
-      toast.success(error?.response?.data?.msg);
+      toast.error(error?.response?.data?.msg);
     }
     return null;
   };
