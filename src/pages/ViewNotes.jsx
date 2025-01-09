@@ -27,8 +27,8 @@ export const loader = async ({ request }) => {
     return { notes: resp.data.notes, msg };
   } catch (error) {
     toast.error(error?.response?.data?.msg);
+    return { notes: [], msg: error?.response?.data?.msg };
   }
-  return null;
 };
 
 const tableHeadings = [
@@ -42,11 +42,12 @@ const tableHeadings = [
 
 const ViewNotes = () => {
   const { theme } = useSelector((state) => state.user);
-  const { notes, msg } = useLoaderData();
+  const { notes } = useLoaderData();
+  const { msg } = useLoaderData();
 
   const navigation = useNavigation();
 
-  if (notes.length < 1)
+  if (notes?.length < 1)
     return (
       <div
         className={`min-w-[80%] max-w-[1024px] h-auto mx-auto mt-2 flex flex-col justify-center items-start gap-y-8 rounded-lg p-4 ${
@@ -114,7 +115,7 @@ const ViewNotes = () => {
             </tr>
           </thead>
           <tbody>
-            {notes.map((note, index) => {
+            {notes?.map((note, index) => {
               const { _id: id, title, text, completed } = note;
 
               const noteCompleted = completed ? " Yes" : "No";
