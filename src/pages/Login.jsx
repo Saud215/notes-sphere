@@ -19,9 +19,17 @@ export const action =
     const loginData = Object.fromEntries(formData);
 
     try {
-      const resp = await customFetch.post("/auth/login", loginData);
+      const resp = await customFetch.post("/auth/login", loginData, {
+        headers: {
+          "Content-Type": "application/json", // Specifies JSON payload
+          Accept: "application/json", // Ensures server returns JSON
+        },
+        withCredentials: true, // Send cookies if necessary
+      });
 
       if (resp.data.success) {
+        console.log(resp);
+
         store.dispatch(login(resp.data.user));
         toast.success(resp.data.msg);
         return redirect("/dashboard");

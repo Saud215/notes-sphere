@@ -31,7 +31,6 @@ export const action =
   (store) =>
   async ({ request, params }) => {
     const formData = await request.formData();
-    const data = Object.fromEntries(formData);
 
     try {
       const { user } = store.getState().user;
@@ -39,11 +38,20 @@ export const action =
         toast.error("Demo User can only Read Data!");
         return null;
       }
+
+      const file = formData.get("avatar");
+      if (file && file.size > 500000) {
+        toast.error("Image Size is greater than 0.5 MB!");
+        return null;
+      }
+
       const resp = await customFetch.patch(
         `/users/update-user/${params.id}`,
-        data,
+        formData,
         { withCredentials: true }
       );
+      console.log(formData);
+
       toast.success("Details updated successfully, Now Please Login!");
       store.dispatch(logout());
       return redirect("/login");
@@ -65,6 +73,7 @@ const EditProfile = () => {
     <section className="flex flex-col justify-center items-center relative">
       <Form
         method="POST"
+        encType="multipart/form-data"
         className={`form-control h-auto min-w-72 flex justify-center items-center p-6 mt-4 gap-y-2 rounded-xl ${
           theme === "dracula" ? " bg-slate-950" : "bg-white"
         }`}
@@ -72,6 +81,20 @@ const EditProfile = () => {
         <h2 className={`text-3xl font-semibold tracking-wider mb-4`}>
           Edit Profile
         </h2>
+
+        <div className="form-control w-full max-w-xs">
+          <label className="label" htmlFor="avatar">
+            <span className="label-text">Select Image (Max 0.5 MB)</span>
+          </label>
+          <input
+            type="file"
+            placeholder="Upload Image"
+            name="avatar"
+            id="avatar"
+            className="input input-bordered w-full max-w-xs p-2"
+            accept="image/*"
+          />
+        </div>
 
         <FormInput
           type={"text"}

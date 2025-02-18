@@ -37,19 +37,23 @@ const router = createBrowserRouter([
     path: "/register",
     element: <Register />,
     action: registerAction,
+    errorElement: <ErrorElement />,
   },
   {
     path: "/login",
     element: <Login />,
     action: loginAction(store),
+    errorElement: <ErrorElement />,
   },
   {
     path: "/logout",
     loader: logoutLoader(store),
+    errorElement: <ErrorElement />,
   },
   {
     path: "/dashboard",
     element: <DashboardLayout />,
+    errorElement: <ErrorElement />,
     children: [
       { index: true, element: <DashboardLanding /> },
       { path: "add-note", element: <AddNote />, action: addNoteAction(store) },

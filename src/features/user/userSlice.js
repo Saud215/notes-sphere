@@ -40,6 +40,7 @@ const userSlice = createSlice({
         userId: action.payload._id,
         email: action.payload.email,
         role: action.payload.role,
+        avatar: action.payload.avatar,
       };
       state.user = user;
       localStorage.setItem("user", JSON.stringify(user));

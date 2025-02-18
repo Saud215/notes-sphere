@@ -18,7 +18,11 @@ const LogoutForm = () => {
           className="text-lg font-bold text-gray-700 tracking-wider flex items-center gap-x-1 bg-secondary/30 rounded-lg px-2 hover:cursor-pointer "
         >
           <span>
-            <BiUser />
+            {user?.avatar ? (
+              <img src={user?.avatar} className="h-6 w-6 rounded-full  " />
+            ) : (
+              <BiUser />
+            )}
           </span>
           {user?.username}
         </div>

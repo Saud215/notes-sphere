@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Logo from "../components/Logo";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
+import noteTakingImg from "../assets/note_taking.svg";
 
 const HomeLayout = () => {
   const { theme } = useSelector((state) => state.user);
@@ -19,7 +20,7 @@ const HomeLayout = () => {
       <div className=" w-[90vw] max-w-[1280px] flex justify-center items-center my-4">
         <div className="flex justify-center items-center flex-col lg:flex-row-reverse gap-y-8">
           <img
-            src="./note_taking.svg"
+            src={noteTakingImg}
             className={`rounded-2xl w-72 lg:w-[468px] lg:mx-8 ${
               theme === "dracula" ? "bg-charcoal" : "bg-beige"
             }`}
