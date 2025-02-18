@@ -28,8 +28,6 @@ export const action =
       });
 
       if (resp.data.success) {
-        console.log(resp);
-
         store.dispatch(login(resp.data.user));
         toast.success(resp.data.msg);
         return redirect("/dashboard");
